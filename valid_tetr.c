@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 21:19:03 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/23 21:15:41 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/01/23 23:39:44 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void it_is_error()
     exit(1); //или здесь нет разницы 1 или 0?
 }
 
-int check_size(char **tetram)
+int check_size(char **tetr)
 {
     int x;
     int y;
@@ -31,7 +31,7 @@ int check_size(char **tetram)
     {
         while (x < линейный_размер_карты)
         {
-            if (tetram[x][y] == "#")
+            if (tetr[x][y] == "#")
                 summ++;
             x++;
         }
@@ -42,7 +42,7 @@ int check_size(char **tetram)
     return (0);
 }
 
-int check_form(char **tetram)
+int check_form(char **tetr)
 {
     int x;
     int y;
@@ -55,10 +55,10 @@ int check_form(char **tetram)
     {
         while (x < линейный_размер_карты)
         {
-            if (tetram[x][y] == "#")
+            if (tetr[x][y] == "#")
             {
-                if ((tetram[x + 1][y] != "#") && (tetram[x - 1][y] != "#") \
-                && (tetram[x][y - 1] != "#") && (tetram[x][y + 1] != "#"))
+                if ((tetr[x + 1][y] != "#") && (tetr[x - 1][y] != "#") \
+                && (tetr[x][y - 1] != "#") && (tetr[x][y + 1] != "#"))
                 form++;
             }
             x++;
@@ -83,7 +83,7 @@ int check_content(char **tetr)
     {
         while (x < линейный_размер_карты)
         {
-            if (tetram[x][y] == "#" || tetram[x][y] == ".")
+            if (tetr[x][y] == "#" || tetr[x][y] == ".")
                 points++;
             x++;
         }
