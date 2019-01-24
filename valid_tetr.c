@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 21:19:03 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/23 23:39:44 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/01/24 20:28:08 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,24 @@ int check_size(char **tetr)
 {
     int x;
     int y;
-    int summ;
+    int size;
 
     x = 0;
     y = 0;
-    summ = 0;
+    size = 0;
     while (y < линейный_размер_карты)
     {
         while (x < линейный_размер_карты)
         {
             if (tetr[x][y] == "#")
-                summ++;
+                size++;
             x++;
         }
         y++;
     }
-    if (summ != 4)
-        it_is_error();
-    return (0);
+    return (size);
+    // if (summ != 4)
+    //     it_is_error();
 }
 
 int check_form(char **tetr)
@@ -65,12 +65,12 @@ int check_form(char **tetr)
         }
         y++;
     }
-    if (form > 0)
-        it_is_error();
-    return (0);
+    return (form);
+    // if (form > 0)
+    //     it_is_error();
 }
 
-int check_content(char **tetr)
+int check_points(char **tetr)
 {
     int x;
     int y;
@@ -89,7 +89,15 @@ int check_content(char **tetr)
         }
         y++;
     }
-    if (points != 16)
+    return (points);
+	//proverka na 12 tochek
+    // if (points != 16)
+    //     it_is_error();
+}
+
+void valid_check(char **tetr)
+{
+    if ((check_points(tetr) != 16) || (check_form(tetr) > 0)
+        || (check_size(tetr) != 4))
         it_is_error();
-    return (0);
 }
