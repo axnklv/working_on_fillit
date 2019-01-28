@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/24 20:19:30 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/28 22:44:05 by elchrist         ###   ########.fr       */
+/*   Created: 2019/01/28 21:22:26 by elchrist          #+#    #+#             */
+/*   Updated: 2019/01/28 22:20:20 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void it_is_error()
+void it_is_error(void)
 {
-    ft_putendl("error");
+    write(1, "error\n", 6);
     exit(1);
-}
-
-void fillit(char **argv) //мб char *argv, т.к. я вызываю только argv[1]
-{
-
-
 }
 
 int main(int argc, char **argv)
 {
     if (argc == 2)
-        fillit(argv[1]);
-    return (0);
+	   make_tetr(&argv[1], 4);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 23:45:08 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/28 22:47:17 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/01/29 00:04:21 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 
 #include "fillit.h"
 
-//функция, которая будет переводить решеточки к буквам
-//по моей задумке должна будет применяться в цикле, с постоянно увелич. quantity
-//т.е. изначально quantity=0 => буква=А, счётчик увелич. => quantity=1, буква=B
 void	to_letters(char **tetr, int quantity)
 {
 	int i;
@@ -47,8 +44,6 @@ void	to_letters(char **tetr, int quantity)
 	}
 }
 
-//просто разбиение make_tetr на 2 функции, т.к. в норму не запихнуть
-//тут и так код ублюдский с этими внутренними инкрементами
 char	**premake_tetr(char *buff, int quantity)
 {
 	char	**temp;
@@ -67,19 +62,15 @@ char	**premake_tetr(char *buff, int quantity)
 			return (NULL);
 		j = 0;
 		while (j < 4)
-			temp[i][j++] = buff[k++]; //buff из make_tetr, в него читаются tetr
-		temp[i++][j] = '\0'; // ??
+			temp[i][j++] = buff[k++];
+		temp[i++][j] = '\0';
 		k++;
 	}
-	valid_check(temp);
-	to_letters(temp, quantity);
+	// valid_check1(temp);
+	// to_letters(temp, quantity);
 	return (temp);
 }
 
-//потом будет в void fillit
-//наверное что-то в духе tetr = make_tetr(argv, quantity)
-//21 символ т.к. 5х4=20 + 1 символ '\n' между тетраминосами
-//22 т.к. в буфер закидывается конец
 char	***make_tetr(char **argv, int quantity)
 {
 	char	***tetr;
@@ -100,5 +91,7 @@ char	***make_tetr(char **argv, int quantity)
 		tetr[i] = premake_tetr(buff, i);
         i++;
 	}
+	valid_check1(tetr);
+	to_letters(tetr, quantity);
 	return (tetr);
 }
