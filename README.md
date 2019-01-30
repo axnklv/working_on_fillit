@@ -1,5 +1,5 @@
 # fillit
-Team project with Dasha Webb
+Team project with Dasha Webb, всё важное и правильное в trying_to_launch
 
 Саша - молодец, сделал полностью свою часть
 
