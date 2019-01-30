@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 21:22:26 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/28 22:20:20 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/01/30 22:52:00 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void it_is_error(void)
 int main(int argc, char **argv)
 {
     if (argc == 2)
-	   make_tetr(&argv[1], 4);
+	   make_tetr(argv[1]);
 	return (0);
 }

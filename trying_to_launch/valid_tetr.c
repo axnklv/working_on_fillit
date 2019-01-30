@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 21:19:03 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/29 00:01:49 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/01/30 23:19:38 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,10 @@ int		check_newline(char **tetr)
 	return (0);
 }
 
-void	valid_check1(char **tetr)
+void	valid_check(char **tetr)
 {
-	if (check_points(tetr) != 16)
+	if ((check_points(tetr) != 16) || (check_size(tetr) != 4)
+		|| ((check_link(tetr, 0, 0) != 6) && (check_link(tetr, 0, 0) != 8))
+		|| (check_newline(tetr) == 1))
 		it_is_error();
 }
-//
-// void	valid_check(char **tetr)
-// {
-// 	if ((check_points(tetr) != 16) || (check_size(tetr) != 4)
-// 		|| ((check_link(tetr, 0, 0) != 6) || (check_link(tetr, 0, 0) != 8))
-// 		|| (check_newline(tetr) == 1))
-// 		it_is_error();
-// }
