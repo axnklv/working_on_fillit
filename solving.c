@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 14:00:02 by creek             #+#    #+#             */
-/*   Updated: 2019/01/31 17:29:19 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/02 21:56:30 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ typedef struct s_tetr
 	size_t height;
 	size_t width;
 	char letter;
-	char **array; /* to store the actual tetrimino shape */
 	struct s_tetr *next;
+	char **array; /* to store the actual tetrimino shape */
 } t_tetr;
 
 int	fitting_tetri(size_t height, size_t width, char **array, size_t min_size)
@@ -96,12 +96,12 @@ int main()
 	tetr_a->width = 2;
 	tetr_a->letter = 'A';
 	tetr_a->next = NULL;
-
-	tetr_a->array = {'.', '#'};
-					// {'#', '#'},
-					// {'#', '.'}}; /* или надо замаллочить сначала и туда уже записать? */
-
-
+	// if (!(tetr_a->array = (char *)malloc(sizeof(char) * 10)))
+	// 	return (0);
+	// tetr_a->array;
+	char random_array[][6] = {".##", "##."};
+	char *ptr = &random_array[0][0];
+	tetr_a->array = &ptr;
 	size_t min_side = min_map_size(quantity);
 
 	printf("%d", fitting_tetri(tetr_a->height, tetr_a->width, tetr_a->array, min_side));
