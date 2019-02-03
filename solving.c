@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 14:00:02 by creek             #+#    #+#             */
-/*   Updated: 2019/02/02 21:56:30 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/03 20:16:31 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	fitting_tetri(size_t height, size_t width, char **array, size_t min_size)
 			}
 			if (i == width - 1 && j == height - 1)
 				break ; // значит тетримина успешно вписалась, и можно рисовать и переходить к следующей фигуре (?)
+				// здесь должен быть рекурсивный вызов функции и return (1)
 
 		}
 		/* если успешно вышли отсюда и фигура вместилась, то запоминаем ее на карте*/
@@ -83,6 +84,20 @@ int	fitting_tetri(size_t height, size_t width, char **array, size_t min_size)
 size_t min_map_size(size_t quantity)
 {
 	return(ft_sqrt(quantity * 4));
+}
+
+int		ft_sqrt(int nb)
+{
+	int i;
+
+	i = 0;
+	while ((i * i) <= nb)
+	{
+		if ((i * i) == nb)
+			return (i);
+		i++;
+	}
+	return (i++);
 }
 
 int main()
