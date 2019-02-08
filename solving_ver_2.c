@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 16:07:05 by creek             #+#    #+#             */
-/*   Updated: 2019/02/07 23:54:08 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/08 14:05:39 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_tetr
 } t_tetr;
 
 static size_t x;
-sta
+static size_t y;
+
 /* this function draws a tetrimino when it fits successfully
 it's assumed that tetrimino is already coloured */
 

@@ -5,120 +5,133 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/30 14:00:02 by creek             #+#    #+#             */
-/*   Updated: 2019/02/07 16:52:57 by creek            ###   ########.fr       */
+/*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
+/*   Updated: 2019/02/08 22:10:22 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solving.h"
-#include "libft.h"
-#include "strings.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-typedef struct s_tetr
+/* quantity передается от Сашеньки */
+
+int ft_sqrt(int nb)
 {
-	size_t height;
-	size_t width;
-	char letter;
-	struct s_tetr *next;
-	char **array; /* to store the actual tetrimino shape */
-} t_tetr;
+    int i;
 
-int	fitting_tetri(size_t height, size_t width, char **array, size_t min_size)
-{
-	/* допустим на вход подается массив с тетримино, в котором нет пустых строк или столбцовз
-	.##.
-	..#.
-	..#.
-	*/
-	size_t i;
-	size_t j;
-	size_t x_shift = 0;
-	size_t y_shift = 0;
-	j = 0;
-	char map [min_size][min_size]; // malloc
-	/* min_size считается по формуле */
-
-	while (y_shift < min_size)
-	{
-		y_shift += j;
-		i = 0;
-		while (x_shift < min_size)
-		{
-			x_shift += i; // x_shift тут не будет обнуляться.
-			if (array[j][i] == '.') // проверяем координату тетримины
-				i++;
-			else if (array[j][i] == '#') // или они подаются уже окрашенными? тогда чек на не '.'
-			/* если есть что вписывать, то проверяем карту */
-			{
-				if (map[y_shift][x_shift] == '.') /* если клетка свободна */
-					i++; /* одну клетку успешно вписали, теперь проверяем следующую клетку фигуры*/
-				else
-				{
-					/* если не вписался, то обнуляем тетримину, потому что нужно, чтобы все клетки подряд вписались */
-					i = 0;
-					j = 0;
-				}
-				x_shift++; //если клетка занята, пробуем следующую;
-
-			}
-			if (i == width - 1) // все клетки по горизонтали проверили, можно переходить к следующей строчке
-				j++;
-			if (x_shift == min_size - 1)
-			{
-				y_shift++;
-				x_shift = 0;
-			}
-			if (i == width - 1 && j == height - 1)
-				break ; // значит тетримина успешно вписалась, и можно рисовать и переходить к следующей фигуре (?)
-				// здесь должен быть рекурсивный вызов функции и return (1)
-
-		}
-		/* если успешно вышли отсюда и фигура вместилась, то запоминаем ее на карте*/
-		return (1);
-	}
-	return(0);
+    i = 0;
+    while ((i * i) <= nb)
+    {
+		if ((i * i) == nb)
+            return (i);
+		i++;
+    }
+    return (i++);
 }
 
-size_t min_map_size(size_t quantity)
-{
-	return(ft_sqrt(quantity * 4));
-}
-
-int		ft_sqrt(int nb)
+void empty_map_drawing(char **map, int min_size)
 {
 	int i;
 
 	i = 0;
-	while ((i * i) <= nb)
+	while(i < min_size)
 	{
-		if ((i * i) == nb)
-			return (i);
+		ft_bzero(map[i], (size_t)min_size);
 		i++;
 	}
-	return (i++);
 }
 
-int main()
+int map(int quantity)
 {
-	int quantity = 1; /* для начала */
+	int map_size;
+	char **map;
 
-	t_tetr *tetr_a; // create a pointer and malloc it (check libft)
-	if (!(tetr_a = (t_tetr *)malloc(sizeof(t_tetr))))
+	map_size = ft_sqrt(quantity * 4);
+	if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size))))
 		return (0);
-	tetr_a->height = 3;
-	tetr_a->width = 2;
-	tetr_a->letter = 'A';
-	tetr_a->next = NULL;
-	// if (!(tetr_a->array = (char *)malloc(sizeof(char) * 10)))
-	// 	return (0);
-	// tetr_a->array;
-	char random_array[][6] = {".##", "##."};
-	char *ptr = &random_array[0][0];
-	tetr_a->array = &ptr;
-	size_t min_side = min_map_size(quantity);
-
-	printf("%d", fitting_tetri(tetr_a->height, tetr_a->width, tetr_a->array, min_side));
+	empty_map_drawing(map, map_size);
+	while (!(fitting(map, tetri, map_size, quantity))
+	{
+		free(map);
+		map_size++;
+		if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size))))
+			return (0);
+		empty_map_drawing(map, map_size);
+	}
 	return (0);
+}
+
+int fitting(char **map, t_tetr **tetri, int map_size, int quantity)/* или t_tetr **tetri */
+{
+	int i;
+	int j; // нужны ли мне тут эти переменные или хуй с ними?
+	int quantity_1;
+
+	quantity_1 = quantity;
+	if (quantity == 0)
+		return (1);
+	while (map_iterating(tetri, map, map_size)) // если текущая фигура встает успешно
+	{
+		tetri_drawing(x, y, map, tetri->shape, tetri->letter); // какие координаты ей передаются?
+		quantity--;
+		return(fitting(map, tetri->next, map_size, quantity));
+	}
+	if (quantity == quantity_1) // сюда заходим если map_iterating вернул 0, т.е. фигура не вписалась, и это самая первая фигура, значит надо увеличить карту
+	{
+		map_size++;
+		return(fitting(map, tetri, map_size, quantity));
+	}
+	return (0); // сюда заходим, если map_iterating вернул 0, и это любая другая фигура - выход из рекурсии
+}
+
+int map_iterating(t_tetr **tetri, char **map, int map_size)
+{
+	int i;
+	int j; // координаты фигуры тетримины
+	int x;
+	int y; // координаты точки на карте
+
+	j = 0;
+	while (y + j < map_size)
+	{
+		i = 0;
+		x = 0;
+		while (x + i < map_size)
+		{
+			if (map[y + j][x + i] == '\0')
+				i++; // i должно итерироваться только до тех пор, пока оно < width, то же с j;
+			else if ((map[y + j][x + i] != '\0') && (tetri->shape[j][i] != '.'))
+			{
+				i = 0; // если в точке тетри есть символ, а места для него нет, мы продолжаем поиск
+				j = 0;
+				x++;
+			}
+			if((j == tetri->height - 1) && (i == tetri->width - 1))
+				return (1); // фигура вписалась
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+int tetri_drawing(size_t x, size_t y, char **map, char **shape)//, char letter)
+{
+	size_t i;
+	size_t j;
+
+	j = 0;
+	while (shape[j])
+	{
+		y += j;
+		i = 0;
+		while (shape[j][i])
+		{
+			x += i;
+			if (shape[j][i] != '.')
+				map[y][x] = shape[j][i];
+			i++;
+		}
+		j++;
+	}
+	return (1); //что мне надо вернуть?
 }
