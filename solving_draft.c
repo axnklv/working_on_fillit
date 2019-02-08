@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 16:07:05 by creek             #+#    #+#             */
-/*   Updated: 2019/02/05 16:47:38 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/07 16:56:58 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int checking_position(size_t height, size_t width, char **array, size_t min_size
 		/* если успешно вышли отсюда и фигура вместилась, то запоминаем ее на карте*/
 		return (1);
 	}
-	return(0);
+	return(0); // ВАЖНО дойти сюда и возвращать ноль, если в существующей карте фигура никак не вписалась.
 }
 
 /* checking_position должен принимать только конкретную координату, и конкретную форму.
@@ -95,35 +95,26 @@ int checking_position(size_t height, size_t width, char **array, size_t min_size
 Хождение по клеткам будет в одной функции, внутри которой я буду вызывать другую, которая будет проверять конкретную координату.
  */
 
-
-*/
 int fitting(size_t map_size, int quantity, char **shape) // может ей передавать стартовые координаты?
 {
-	if (quantity = 0 && LAST_SHAPE_FIT) // how do I identify fit shape?
+	if (quantity == 0)
 		return (1); //возвращает True, если дошел до конца, и все фигуры вписались
 	while (map[]) // map будет объявлен в другой функции
 	{
-		// if (checking_position(shape)) // если текущая фигура встает успешно
-		// {
-		// 	tetri_drawing(x, y, map, shape, letter); // мы ее рисуем
-		// 	quantity--;
-		// 	return(fitting(SHAPE со следующей тетриминой, quantity, map_size)); // здесь будет заходить в рекурсию бесконечно, и никогда в tetri_drawing);
-		// }
-		// else //сюда надо зайти, если конкретная фигура не вписалась, и надо попробовать следующее положение для предыдущей фигуры
-		// но тогда в if должно быть return от fitting. И понять когда фиттинг возвращает ноль
-		// {
-		//	ls
-		// }
-		if (checking_position == 1 && quantity >= 1 //????)
+		if (checking_position(shape)) // если текущая фигура встает успешно
 		{
-			tetri_drawing(x, y, map, shape, letter);
+			tetri_drawing(x, y, map, shape, letter); // мы ее рисуем
 			quantity--;
-			fitting(shape + 1); // тогда идем дальше со следующей фигурой
+			return(fitting(SHAPE со следующей тетриминой, quantity, map_size)); // здесь будет заходить в рекурсию бесконечно, и никогда в tetri_drawing);
 		}
-		else () // фигура не вписалась, чекинг позишн вернул 0
-			fitting(shape - 1, x + 1, y); // тогда идем дальше со следующей фигурой
+		else //сюда надо зайти, если конкретная фигура не вписалась, и надо попробовать следующее положение для предыдущей фигуры
+		/* т.е. checking_position вернул 0 */
+			return(fitting(shape - 1, x + 1, y)); // тогда идем дальше со следующей фигурой	// 	quantity--;
 	}
-	if (конец карты) // ????
+	if (конец карты && quantity > 1) // Наоборот, quantity - изначальное, т.е. мы попробовали все клетки для первой фигуры и ничего не встает
+	{
 		map_size++;
+		return(fitting(map_size, quantity, shape));
+	}
 	return (0);
 }
