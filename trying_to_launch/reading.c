@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 23:45:08 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/30 23:20:49 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:35:37 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ void	to_letters(char **tetr, char letter)
 		{
 			if (tetr[i][j] == '#')
 				tetr[i][j] = letter;
-            j++;
+			j++;
 		}
-        i++;
+		i++;
 	}
 	letter++;
 }
 
-
-char	**premake_tetr(char *buff, char letter)
+char		**premake_tetr(char *buff, int quantity)
 {
 	char	**temp;
 	int		i;
 	int		j;
 	int		k;
+	char	letter;
 
+	letter = 65 + quantity;
 	i = 0;
 	k = 0;
 	if (!(temp = (char**)malloc(sizeof(char*) * 5)))
@@ -56,37 +57,39 @@ char	**premake_tetr(char *buff, char letter)
 		k++;
 	}
 	valid_check(temp);
-	to_letters(temp, letter);
+	to_letters(temp, letter)игпп
 	return (temp);
 }
 
-char	***make_tetr(char *argv)//, int quantity)
+// int ft_quantity(int i)
+// {
+// 	if (i != 0)
+//
+// }
+
+char		***make_tetr(char *argv)
 {
 	char	***tetr;
 	char	buff[22];
 	int		ret;
 	int		fd;
 	int		i;
-	char letter;
 
-	letter = 'A';
 	i = 0;
-	// if (!(tetr = (char***)malloc(sizeof(char**) * 0)))
-	// 	return (NULL);
-	// tetr[4] = NULL;
 	fd = open(argv, O_RDONLY);
 	while ((ret = read(fd, buff, 21)) && (i < 27))
 	{
 		buff[ret] = '\0';
-		if ((ret != 21) && (buff[ret - 2] == '\n')) //чтобы не кончалось пустой строкой
+		if ((ret != 21) && (buff[ret - 2] == '\n')) //чтобы не кончалось \n'ом
 			it_is_error();
-		tetr[i] = premake_tetr(buff, letter++);
+		tetr[i] = premake_tetr(buff, i);
 		i++;
 	}
+	ft_quantity(i);
 	// для тестового вывода матрицы
 	// int q;
 	// int w;
-	// for (q = 0; q < 2; q++)
+	// for (q = 0; q < 4; q++)
 	// {
 	// 	for (w = 0; w < 4; w++)
 	// 		printf("%s\n", tetr[q][w]);

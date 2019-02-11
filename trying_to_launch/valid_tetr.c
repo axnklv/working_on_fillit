@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 21:19:03 by elchrist          #+#    #+#             */
-/*   Updated: 2019/01/30 23:19:38 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/11 17:15:07 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int		check_link(char **tetr, int x, int y)
 	int	link;
 
 	link = 0;
-	while (y++ < 4)
+	while (y < 4)
 	{
 		x = 0;
-		while (x++ < 5)
+		while (x < 5)
 		{
 			if (tetr[y][x] == '#')
 			{
@@ -55,7 +55,9 @@ int		check_link(char **tetr, int x, int y)
 				if ((y > 0) && (tetr[y - 1][x] == '#'))
 					link++;
 			}
+			x++;
 		}
+		y++;
 	}
 	return (link);
 }
