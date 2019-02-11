@@ -71,7 +71,7 @@ int fitting(char **map, t_tetr **tetri, int map_size, int quantity)/* или t_t
 		return (1);
 	while (map_iterating(tetri, map, map_size)) // если текущая фигура встает успешно
 	{
-		tetri_drawing(x, y, map, tetri->shape, tetri->letter); // какие координаты ей передаются?
+		tetri_drawing(x, y, map, (**tetri).shape, tetri->letter); // какие координаты ей передаются?
 		quantity--;
 		return(fitting(map, tetri->next, map_size, quantity));
 	}
