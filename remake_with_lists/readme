@@ -1,3 +1,7 @@
+Compiling
+
+gcc main.c validation.c reading.c lib_functions.c list_functions.c -I fillit.h
+
 Принцип работы
 
 1) *read_tetris(int fd)
