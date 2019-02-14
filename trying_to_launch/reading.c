@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 23:45:08 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/11 22:35:37 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:06:18 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char		**premake_tetr(char *buff, int quantity)
 		k++;
 	}
 	valid_check(temp);
-	to_letters(temp, letter)игпп
+	to_letters(temp, letter);
 	return (temp);
 }
 

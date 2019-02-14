@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solving.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: creek <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 15:31:04 by creek             #+#    #+#             */
-/*   Updated: 2019/02/08 16:28:16 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/11 22:30:10 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 
 typedef struct  s_tetr
 {
-    size_t      height;
-    size_t      width;
+    int      height;
+    int      width;
     char        **shape;
     char        letter;
     struct s_tetr *next;
 }               t_tetr;
+
+void	ft_listadd_to_end(t_tetr **begin_list, t_tetr *new);
+void		free_tetr(t_tetr *head);
 
 int	ft_sqrt(int nb);
 

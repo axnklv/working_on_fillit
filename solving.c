@@ -6,13 +6,13 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/08 22:10:22 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/14 21:30:25 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solving.h"
 
-/* quantity передается от Сашеньки */
+/* quantity передается от Сашеньки = ft_listlen */
 
 int ft_sqrt(int nb)
 {
@@ -28,14 +28,14 @@ int ft_sqrt(int nb)
     return (i++);
 }
 
-void empty_map_drawing(char **map, int min_size)
+void empty_map_drawing(char **map, int map_size)
 {
 	int i;
 
 	i = 0;
-	while(i < min_size)
+	while(i < map_size)
 	{
-		ft_bzero(map[i], (size_t)min_size);
+		ft_bzero(map[i], (size_t)map_size);
 		i++;
 	}
 }
@@ -46,14 +46,14 @@ int map(int quantity)
 	char **map;
 
 	map_size = ft_sqrt(quantity * 4);
-	if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size))))
+	if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size)))) //size + 1 ??
 		return (0);
 	empty_map_drawing(map, map_size);
 	while (!(fitting(map, tetri, map_size, quantity))
 	{
 		free(map);
 		map_size++;
-		if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size))))
+		if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size)))) //size + 1 ??
 			return (0);
 		empty_map_drawing(map, map_size);
 	}
@@ -97,15 +97,15 @@ int map_iterating(t_tetr **tetri, char **map, int map_size)
 		x = 0;
 		while (x + i < map_size)
 		{
-			if (map[y + j][x + i] == '\0')
+			if (map[y + j][x + i] == '\0')   //потому что заполнила нулями
 				i++; // i должно итерироваться только до тех пор, пока оно < width, то же с j;
-			else if ((map[y + j][x + i] != '\0') && (tetri->shape[j][i] != '.'))
+			else if ((map[y + j][x + i] != '\0') && (tetri->shape[j][i] != '.'))  // and  != '\n'
 			{
 				i = 0; // если в точке тетри есть символ, а места для него нет, мы продолжаем поиск
 				j = 0;
 				x++;
 			}
-			if((j == tetri->height - 1) && (i == tetri->width - 1))
+			if((j == tetri->height - 1) && (i == tetri->width - 1)) //j пока нигде не итерируется, надо фикс
 				return (1); // фигура вписалась
 			x++;
 		}
@@ -114,7 +114,7 @@ int map_iterating(t_tetr **tetri, char **map, int map_size)
 	return (0);
 }
 
-int tetri_drawing(size_t x, size_t y, char **map, char **shape)//, char letter)
+int tetri_drawing(size_t x, size_t y, char **map, char **shape)//, char letter) ; t_tetr **shape
 {
 	size_t i;
 	size_t j;
@@ -127,11 +127,18 @@ int tetri_drawing(size_t x, size_t y, char **map, char **shape)//, char letter)
 		while (shape[j][i])
 		{
 			x += i;
-			if (shape[j][i] != '.')
+			if (shape[j][i] != '.') // and  != '\n'
 				map[y][x] = shape[j][i];
 			i++;
 		}
 		j++;
 	}
 	return (1); //что мне надо вернуть?
+}
+
+void fillit(kakie-to params)
+{
+    //собирает все функции с чтением, валидацией и отрисовкой
+    //делает их вывод
+    //всё красиво и работает, voila!!!!!!!!
 }
