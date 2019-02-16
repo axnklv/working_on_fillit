@@ -6,11 +6,12 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 21:45:07 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/14 21:00:19 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/16 20:26:01 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "solving.h"
 
 void it_is_error(void)
 {
@@ -20,6 +21,7 @@ void it_is_error(void)
 
 int			main(int argc, char **argv)
 {
+	int quantity;
 	t_list	*tetris;
 	int		fd;
 
@@ -27,6 +29,8 @@ int			main(int argc, char **argv)
 	{
 		fd = open(argv[1], O_RDONLY);
 		tetris = read_tetris(fd);
+		quantity = ft_listlen(tetris);
+		fillit(quantity, tetris);
 		print_list(tetris); //функция просто для теста, выводит адреса)))0)
 		//fillit(tetris); //какая-нибудь итоговая функция, в которую всё собрано
 		//free_list(tetris);
