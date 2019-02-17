@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 15:31:04 by creek             #+#    #+#             */
-/*   Updated: 2019/02/16 20:35:38 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/17 02:26:43 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct  s_tetr
     int      width;
     char        **shape;
     char        letter;
-    struct s_tetr *next;
+//    struct s_tetr *next;
 }               t_tetr;
 
 void	ft_listadd_to_end(t_tetr **begin_list, t_tetr *new);

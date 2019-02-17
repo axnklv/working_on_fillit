@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/16 20:34:41 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/17 02:35:47 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void empty_map_drawing(char **map, int map_size)
 	}
 }
 
-int solving(int quantity, t_tetr *tetri, char **map)
+int solving(int quantity, t_list *tetri, char **map)
 {
 	int i;
 	int j;
@@ -68,7 +68,7 @@ int solving(int quantity, t_tetr *tetri, char **map)
 	return (0);
 }
 
-int fillit(int quantity, t_tetr *tetri)
+int fillit(int quantity, t_list *tetri)
 {
 	int map_size;
 	char **map;
@@ -88,7 +88,7 @@ int fillit(int quantity, t_tetr *tetri)
 	return (0);
 }
 
-int tetri_placing(t_tetr *tetri, int y, int x, char **map)
+int tetri_placing(t_list *tetri, int y, int x, char **map)
 {
 	int i;
 	int j;
@@ -109,7 +109,7 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map)
 	return (1);
 }
 
-int remove_tetri(t_tetr *tetri, char **map, int y, int x)
+int remove_tetri(t_list *tetri, char **map, int y, int x)
 {
 	int i;
 	int j;
@@ -130,7 +130,7 @@ int remove_tetri(t_tetr *tetri, char **map, int y, int x)
 	return (0);
 }
 
-int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri)
+int tetri_drawing(size_t y, size_t x, char **map, t_list *tetri)
 {
 	size_t i;
 	size_t j;
