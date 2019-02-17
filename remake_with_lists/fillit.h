@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 19:20:03 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/14 21:00:05 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/17 17:17:27 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void		free_list(t_list *head);
 void		ft_listadd_to_end(t_list **begin_list, t_list *new);
 void        print_list(t_list *list);
 int		ft_listlen(t_list *content);
+void printing_fin_map(char **map);
 
 #endif

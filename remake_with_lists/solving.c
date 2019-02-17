@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/17 02:35:47 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 00:14:33 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,39 @@ void empty_map_drawing(char **map, int map_size)
 	int i;
 
 	i = 0;
-	while(i < map_size)
+	while (i < map_size)
 	{
-		ft_memset(map[i], '.', (size_t)map_size); // здесь будет ft_memset
+		map[i] = ft_strnew((size_t)map_size + 1);
+		ft_memset(map[i], '.', (size_t)map_size);
 		i++;
 	}
 }
 
-int solving(int quantity, t_list *tetri, char **map)
+int solving(int quantity, t_list *tetris, char **map, int map_size)
 {
 	int i;
 	int j;
 
 	j = 0;
-	if (quantity == 0) //  может САША вообще нахер не нужен? сделать проверку указателя на next == NULL?
+	if (quantity == 0) //  может quantity вообще нахер не нужен? сделать проверку указателя на next == NULL?
 		return (1);
-	while (map[j])
+	while (j < map_size)
 	{
 		i = 0;
-		while (map[j][i])
+		while (i < map_size)
 		{
-			if (tetri_placing(tetri, j, i, map))
+			if (tetri_placing((t_tetr *)tetris->content, j, i, map, map_size))
 			{
-				tetri_drawing(j, i, map, tetri);
+				tetri_drawing(j, i, map, (t_tetr *)tetris->content);
+				for (int n = 0; n < map_size; n++)
+					printf("%s\n", map[n]);
+				printf("End of map\n");
 				quantity--;
-				if (solving(quantity, &((tetri)->next), map))
+				for (int n = 0; n < map_size; n++)
+					printf("%s - это строчка shape\n", ((t_tetr *)tetris->content)->shape[n]);
+				if (solving(quantity, tetris->next, map, map_size))
 					return (1);
-				remove_tetri(tetri, map, j, i);
+				remove_tetri((t_tetr *)tetris->content, map, j, i);
 			}
 			i++;
 		}
@@ -68,48 +74,76 @@ int solving(int quantity, t_list *tetri, char **map)
 	return (0);
 }
 
-int fillit(int quantity, t_list *tetri)
+char** fillit(int quantity, t_list *tetris)
 {
 	int map_size;
 	char **map;
-
 	map_size = ft_sqrt_round_up(quantity * 4);
-	if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size)))) //size + 1 ??
+	if (!(map = (char **)malloc((sizeof(*map) * (map_size + 1))))) //size + 1 ??
 		return (0);
 	empty_map_drawing(map, map_size);
-	while (!(solving(quantity, tetri, map)))
+	while (!(solving(quantity, tetris, map, map_size)))
 	{
 		free(map);
 		map_size++;
-		if (!(map = (char **)malloc(sizeof(char *) * (map_size * map_size)))) //size + 1 ??
+		if (!(map = (char **)malloc((sizeof(*map) * (map_size + 1)))))
 			return (0);
 		empty_map_drawing(map, map_size);
 	}
-	return (0);
+	return (map);
 }
 
-int tetri_placing(t_list *tetri, int y, int x, char **map)
+int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 {
 	int i;
 	int j;
 
 	j = 0;
-	// check isSafe ?
 	while (j < (*tetri).height)
 	{
 		i = 0;
 		while (i < (*tetri).width)
 		{
-			if (!(map[y + j][x + i]) || (map[y + j][x + i] != '.' && (*tetri).shape[j][i] != '.')) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
+			if ((y + j) == map_size || (x + i) == map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j][i] != '.')) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
 				return (0);
+			// printf("%d - это i\n", i);
+			// printf("%d - это x + i\n", x + i);
 			i++;
 		}
+		// printf("%d - это j\n", j);
+		// printf("%d - это y + j\n", y + j);
 		j++;
 	}
 	return (1);
 }
 
-int remove_tetri(t_list *tetri, char **map, int y, int x)
+/* просто сохраню здесь старую версию своего tetri_placing */
+/* int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
+{
+	int i;
+	int j;
+
+	j = 0;
+	while (j < (*tetri).height)
+	{
+		i = 0;
+		while (i < (*tetri).width)
+		{
+			if ((y + j) == map_size || (x + i) == map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j][i] != '.')) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
+				return (0);
+			// printf("%d - это i\n", i);
+			// printf("%d - это x + i\n", x + i);
+			i++;
+		}
+		// printf("%d - это j\n", j);
+		// printf("%d - это y + j\n", y + j);
+		j++;
+	}
+	return (1);
+}
+*/
+
+int remove_tetri(t_tetr *tetri, char **map, int y, int x)
 {
 	int i;
 	int j;
@@ -130,21 +164,21 @@ int remove_tetri(t_list *tetri, char **map, int y, int x)
 	return (0);
 }
 
-int tetri_drawing(size_t y, size_t x, char **map, t_list *tetri)
+int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri)
 {
 	size_t i;
 	size_t j;
 
 	j = 0;
-	while ((*tetri).shape[j])
+	while (j < (*tetri).height)
 	{
-		y += j;
+		//y += j;
 		i = 0;
-		while ((*tetri).shape[j][i])
+		while (i < (*tetri).width)
 		{
-			x += i;
+		//	x += i;
 			if ((*tetri).shape[j][i] != '.' && ((*tetri).shape[j][i] != '\n')) // and  != '\n'
-				map[y][x] = (*tetri).shape[j][i];
+				map[y + j][x + i] = (*tetri).shape[j][i];
 			i++;
 		}
 		j++;

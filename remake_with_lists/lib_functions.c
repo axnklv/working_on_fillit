@@ -6,12 +6,12 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 19:35:08 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/12 20:27:39 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/17 17:41:06 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
+/*
 void	*ft_memset(void *b, int c, size_t len)
 {
 	size_t			i;
@@ -26,6 +26,22 @@ void	*ft_memset(void *b, int c, size_t len)
 		len--;
 	}
 	return (s);
+}*/
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char *d;
+	unsigned char p;
+
+	d = b;
+	p = c;
+	while (len > 0)
+	{
+		*d = p;
+		d++;
+		len--;
+	}
+	return (b);
 }
 
 void		*ft_memalloc(size_t size)
