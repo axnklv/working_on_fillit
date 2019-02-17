@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/18 00:14:33 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 02:46:28 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int solving(int quantity, t_list *tetris, char **map, int map_size)
 		{
 			if (tetri_placing((t_tetr *)tetris->content, j, i, map, map_size))
 			{
-				tetri_drawing(j, i, map, (t_tetr *)tetris->content);
+				tetri_drawing(j, i, map, (t_tetr *)tetris->content, map_size);
 				for (int n = 0; n < map_size; n++)
 					printf("%s\n", map[n]);
 				printf("End of map\n");
 				quantity--;
-				for (int n = 0; n < map_size; n++)
-					printf("%s - это строчка shape\n", ((t_tetr *)tetris->content)->shape[n]);
+				// for (int n = 0; n < map_size; n++)
+				// 	printf("%s - это строчка shape\n", ((t_tetr *)tetris->content)->shape[n]);
 				if (solving(quantity, tetris->next, map, map_size))
 					return (1);
 				remove_tetri((t_tetr *)tetris->content, map, j, i);
@@ -97,28 +97,43 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 {
 	int i;
 	int j;
-
+	int x_shift;
+	int y_shift;
 	j = 0;
-	while (j < (*tetri).height)
+	y_shift = 0;
+	x_shift = 0;
+	i = 0;
+	while (y_shift < 4)
+	{
+		x_shift = 0;
+		while (x_shift < 4)
+		{
+			if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+				break;
+			x_shift++;
+		}
+		if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+			break;
+		y_shift++;
+	}
+	while (j + y_shift < (*tetri).height)
 	{
 		i = 0;
-		while (i < (*tetri).width)
+		while (i + x_shift < (*tetri).width) // возможно что-то не так вот здесь
 		{
-			if ((y + j) == map_size || (x + i) == map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j][i] != '.')) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
+			if ((y + j) >= map_size || (x + i) >= map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter)) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
+			{
+				printf("щас верну 0\n");
 				return (0);
-			// printf("%d - это i\n", i);
-			// printf("%d - это x + i\n", x + i);
+			}
 			i++;
 		}
-		// printf("%d - это j\n", j);
-		// printf("%d - это y + j\n", y + j);
 		j++;
 	}
 	return (1);
 }
-
 /* просто сохраню здесь старую версию своего tetri_placing */
-/* int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
+/*int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 {
 	int i;
 	int j;
@@ -140,8 +155,8 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 		j++;
 	}
 	return (1);
-}
-*/
+}*/
+
 
 int remove_tetri(t_tetr *tetri, char **map, int y, int x)
 {
@@ -154,7 +169,7 @@ int remove_tetri(t_tetr *tetri, char **map, int y, int x)
 	while (j < (*tetri).height)
 	{
 		i = 0;
-		while ((*tetri).width)
+		while (i < (*tetri).width)
 		{
 			map[j][i] = '.';
 			i++;
@@ -164,21 +179,36 @@ int remove_tetri(t_tetr *tetri, char **map, int y, int x)
 	return (0);
 }
 
-int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri)
+int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size)
 {
 	size_t i;
 	size_t j;
 
 	j = 0;
-	while (j < (*tetri).height)
+	int x_shift = 0;
+	int y_shift = 0;
+	while (y_shift < 4) // вот этот цикл надо вынести в отдельную функцию, он в другом месте тоже используется
+	{
+		x_shift = 0;
+		while (x_shift < 4)
+		{
+			if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+				break;
+			x_shift++;
+		}
+		if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+			break;
+		y_shift++;
+	}
+	while (j < (*tetri).height && (y + j + y_shift) < map_size)
 	{
 		//y += j;
 		i = 0;
-		while (i < (*tetri).width)
+		while (i < (*tetri).width && (x + i + x_shift) <= map_size)
 		{
 		//	x += i;
-			if ((*tetri).shape[j][i] != '.' && ((*tetri).shape[j][i] != '\n')) // and  != '\n'
-				map[y + j][x + i] = (*tetri).shape[j][i];
+			if (((*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter) && map[y + j][x + i] == '.')//!= '.' && ((*tetri).shape[j][i] != '\n')) // and  != '\n'
+				map[y + j][x + i] = (*tetri).shape[j + y_shift][i + x_shift];
 			i++;
 		}
 		j++;

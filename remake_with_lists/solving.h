@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 15:31:04 by creek             #+#    #+#             */
-/*   Updated: 2019/02/17 23:20:53 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 02:13:16 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char **fillit(int quantity, t_list *tetris);
 
 // int map_iterating(t_tetr *tetri, char **map, int map_size);
 
-int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri);
+int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size);
 
 //int tetri_placing(t_tetr *tetri, int y, int x, char **map);
 int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size);
