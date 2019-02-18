@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 20:56:24 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/17 21:57:15 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 21:35:25 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ t_list		*create_tetr(char *buff, char letter)
 	{
 		if (buff[i] == '#')
 		{
+			if (buff[i + 1] == '#' && buff[i + 5] == '#' && buff[i + 6] == '#')
+            {
+                width = 2;
+                height = 2;
+                break;
+            } 
 			if ((i < 19) && (buff[i + 1] == '#'))
 				width++;
 			if ((i < 14) && (buff[i + 5] == '#'))

@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 21:45:07 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/17 17:20:45 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 19:59:51 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			main(int argc, char **argv)
 		fd = open(argv[1], O_RDONLY);
 		tetris = read_tetris(fd);
 		quantity = ft_listlen(tetris);
-		map = fillit(quantity, tetris); // ТУТ СЕГФОЛТ
+		map = fillit(quantity, tetris);
 		//printing_fin_map(map);
 		//free_list(tetris);
 
