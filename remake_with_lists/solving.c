@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/18 02:46:28 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 15:16:47 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ int solving(int quantity, t_list *tetris, char **map, int map_size)
 				tetri_drawing(j, i, map, (t_tetr *)tetris->content, map_size);
 				for (int n = 0; n < map_size; n++)
 					printf("%s\n", map[n]);
-				printf("End of map\n");
+				printf("Мапа после отрисовки выше\n");
 				quantity--;
 				// for (int n = 0; n < map_size; n++)
 				// 	printf("%s - это строчка shape\n", ((t_tetr *)tetris->content)->shape[n]);
 				if (solving(quantity, tetris->next, map, map_size))
 					return (1);
-				remove_tetri((t_tetr *)tetris->content, map, j, i);
+				remove_tetri((t_tetr *)tetris->content, map, j, i, map_size);
+        quantity++;
 			}
 			i++;
 		}
@@ -123,13 +124,20 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 		{
 			if ((y + j) >= map_size || (x + i) >= map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter)) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
 			{
-				printf("щас верну 0\n");
+				printf("тетри не встала, щас верну 0\n");
 				return (0);
 			}
 			i++;
 		}
 		j++;
 	}
+  printf("тетри встала, верну 1\n");
+  printf("буква tetri - %c\n", (*tetri).letter);
+  printf("успешные координаты: %d, %d\n", x, y);
+  printf("мапа до отрисовки ниже\n");
+  for (int n = 0; n < map_size; n++)
+    printf("%s\n", map[n]);
+
 	return (1);
 }
 /* просто сохраню здесь старую версию своего tetri_placing */
@@ -158,24 +166,38 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 }*/
 
 
-int remove_tetri(t_tetr *tetri, char **map, int y, int x)
+int remove_tetri(t_tetr *tetri, char **map, int y, int x, int map_size)
 {
 	int i;
 	int j;
 
 	j = 0;
-	y -= (*tetri).height;
-	x -= (*tetri).width;
-	while (j < (*tetri).height)
-	{
-		i = 0;
-		while (i < (*tetri).width)
-		{
-			map[j][i] = '.';
-			i++;
-		}
-		j++;
-	}
+	// y -= (*tetri).height;
+	// x -= (*tetri).width;
+	// while (j < (*tetri).height)
+	// {
+	// 	i = 0;
+	// 	while (i < (*tetri).width)
+	// 	{
+	// 		map[j][i] = '.';
+	// 		i++;
+	// 	}
+	// 	j++;
+	// }  // вот это стирание косячное
+  while (j < map_size)
+  {
+    i = 0;
+    while (i < map_size)
+    {
+      if (map [j][i] == (*tetri).letter)
+        map[j][i] = '.';
+      i++;
+    }
+    j++;
+  }
+  printf("мапа после зачистки ниже\n");
+  for (int n = 0; n < map_size; n++)
+    printf("%s\n", map[n]);
 	return (0);
 }
 

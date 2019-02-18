@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/14 21:30:25 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/18 09:46:16 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int fitting(char **map, t_tetr **tetri, int map_size, int quantity)/* или t_t
 	if (quantity == quantity_1) // сюда заходим если map_iterating вернул 0, т.е. фигура не вписалась, и это самая первая фигура, значит надо увеличить карту
 	{
 		map_size++;
-		return(fitting(map, tetri, map_size, quantity));
+		return(fitting(map, tetri, map_size, quantity, map_size));
 	}
 	return (0); // сюда заходим, если map_iterating вернул 0, и это любая другая фигура - выход из рекурсии
 }
