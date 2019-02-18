@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/18 15:16:47 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/18 19:54:04 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,28 @@ char** fillit(int quantity, t_list *tetris)
 	}
 	return (map);
 }
+void find_first_point(t_tetr *tetri, int *coord)
+{
+    int x_shift;
+    int y_shift;
+    y_shift = 0;
+    x_shift = 0;
+    while (y_shift < 4)
+    {
+        x_shift = 0;
+        while (x_shift < 4)
+        {
+            if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+                break;
+            x_shift++;
+        }
+        if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
+            break;
+        y_shift++;
+    }
+    coord[0] = y_shift;
+    coord[1] = x_shift;
+}
 
 int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 {
@@ -101,26 +123,16 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 	int x_shift;
 	int y_shift;
 	j = 0;
-	y_shift = 0;
-	x_shift = 0;
 	i = 0;
-	while (y_shift < 4)
-	{
-		x_shift = 0;
-		while (x_shift < 4)
-		{
-			if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
-				break;
-			x_shift++;
-		}
-		if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
-			break;
-		y_shift++;
-	}
+	int coord[2] = {0, 0};
+	find_first_point(tetri, coord);
+	y_shift = coord[0];
+	x_shift = coord[1];
+
 	while (j + y_shift < (*tetri).height)
 	{
 		i = 0;
-		while (i + x_shift < (*tetri).width) // возможно что-то не так вот здесь
+		while (i + x_shift < (*tetri).width) // возможно что-то не так вот здесь с координатами x_shift и y_shift (!!)
 		{
 			if ((y + j) >= map_size || (x + i) >= map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter)) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
 			{
@@ -131,40 +143,17 @@ int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
 		}
 		j++;
 	}
-  printf("тетри встала, верну 1\n");
-  printf("буква tetri - %c\n", (*tetri).letter);
-  printf("успешные координаты: %d, %d\n", x, y);
-  printf("мапа до отрисовки ниже\n");
-  for (int n = 0; n < map_size; n++)
-    printf("%s\n", map[n]);
+  	printf("тетри встала, верну 1\n");
+  	printf("буква tetri - %c\n", (*tetri).letter);
+	printf("успешные координаты: %d - x, %d - y\n", x, y);
+	printf("%c - это символ мапы с координатами\n", map[y][x]);
+	printf("мапа до отрисовки ниже\n");
+	for (int n = 0; n < map_size; n++)
+		printf("%s\n", map[n]);
+	printf("\n");
 
 	return (1);
 }
-/* просто сохраню здесь старую версию своего tetri_placing */
-/*int tetri_placing(t_tetr *tetri, int y, int x, char **map, int map_size)
-{
-	int i;
-	int j;
-
-	j = 0;
-	while (j < (*tetri).height)
-	{
-		i = 0;
-		while (i < (*tetri).width)
-		{
-			if ((y + j) == map_size || (x + i) == map_size || (map[y + j][x + i] != '.' && (*tetri).shape[j][i] != '.')) // существует ли эта клетка на карте вовсе, и если да, то что в ней, и что в тетримине
-				return (0);
-			// printf("%d - это i\n", i);
-			// printf("%d - это x + i\n", x + i);
-			i++;
-		}
-		// printf("%d - это j\n", j);
-		// printf("%d - это y + j\n", y + j);
-		j++;
-	}
-	return (1);
-}*/
-
 
 int remove_tetri(t_tetr *tetri, char **map, int y, int x, int map_size)
 {
@@ -205,23 +194,15 @@ int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size)
 {
 	size_t i;
 	size_t j;
+    int x_shift;
+    int y_shift;
 
-	j = 0;
-	int x_shift = 0;
-	int y_shift = 0;
-	while (y_shift < 4) // вот этот цикл надо вынести в отдельную функцию, он в другом месте тоже используется
-	{
-		x_shift = 0;
-		while (x_shift < 4)
-		{
-			if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
-				break;
-			x_shift++;
-		}
-		if ((*tetri).shape[y_shift][x_shift] == (*tetri).letter)
-			break;
-		y_shift++;
-	}
+    j = 0;
+    i = 0;
+    int coord[2] = {0, 0};
+    find_first_point(tetri, coord);
+    y_shift = coord[0];
+    x_shift = coord[1];
 	while (j < (*tetri).height && (y + j + y_shift) < map_size)
 	{
 		//y += j;
