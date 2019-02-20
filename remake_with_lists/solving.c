@@ -6,13 +6,11 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/21 01:39:47 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/21 01:55:16 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solving.h"
-
-/* quantity передается от Сашеньки = ft_listlen */
 
 int ft_sqrt_round_up(int nb)
 {
@@ -203,34 +201,41 @@ void cut_emplty_lines(t_tetr *tetri)
     }
 }
 
-// oid cut_emplty_column(t_tetr *tetri)
-// {
-// 	int col_counter = 0;
-// 	int i = 0;
-// 	int j = 0;
-// 	int new_i;
-// 	// while (i < 4)
-// 	// {
-// 		i = 0;
-// 		col_counter = 0;
-// 		while (i < 4)
-// 		{
-// 			if ((*tetri).shape[i][j] == '.')
-// 				str_counter++;
-// 			j++;
-// 		}
-// 		if (str_counter == 4)
-// 			{
-// 				new_j = 0;
-// 				while (new_j < 3)
-// 				{
-// 					ft_strncpy((*tetri).shape[new_j], (*tetri).shape[new_j + 1], 5);
-// 					new_j++;
-// 				}
-// 				ft_strncpy((*tetri).shape[3], "....", 5);
-// 			}
-// 		// i++;
-// }
+void cut_emplty_column(t_tetr *tetri)
+{
+	int col_counter = 0;
+	int i = 0;
+	int j = 0;
+	int new_i = 0;
+  int new_j = 0;
+	while (j < 4)
+	 {
+		i = 0;
+		col_counter = 0;
+		while (i < 4)
+		{
+			if ((*tetri).shape[i][j] == '.')
+				col_counter++;
+			i++;
+		}
+		if (col_counter == 4)
+	   {
+       //new_i = 0;
+       while (new_i < 4)
+       {
+         new_j = j;
+         while (new_j < 3 - j)
+         {
+          (*tetri).shape[new_i][new_j] = ((*tetri).shape[new_i][new_j + 1]);
+            new_j++;
+         }
+         (*tetri).shape[new_i][new_j] = '.';
+         new_i++;
+       }
+     }
+		j++;
+}
+}
 
 int tetri_placing(t_tetr *tetri,  int x, int y,char **map, int map_size)
 {
@@ -243,6 +248,7 @@ int tetri_placing(t_tetr *tetri,  int x, int y,char **map, int map_size)
 	// printf("%d - это tetri_width\n", (*tetri).width);
 	//move_tetri(tetri);
 	cut_emplty_lines(tetri);
+  cut_emplty_column(tetri);
 	printf("ниже обрезанная тетри\n");
 	for (int n = 0; n < 4; n++)
 		printf("%s\n", (*tetri).shape[n]);
