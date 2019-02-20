@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/19 00:19:48 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/20 23:27:08 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,90 +115,163 @@ char** fillit(int quantity, t_list *tetris)
 //     coord[0] = y_shift;
 //     coord[1] = x_shift;
 // }
-void move_tetri(t_tetr *tetri)
-{
-	t_tetr *temp;
-	int i;
-	int q;
-	int l;
-	int k;
-	int j;
+// void move_tetri(t_tetr *tetri)
+// {
+// 	t_tetr *temp;
+// 	int i;
+// 	int q;
+// 	int l;
+// 	int k;
+// 	int j;
+//
+// 	i = 0;
+// 	while (i < 3)
+//     {
+// 		j = 0;
+// 		while (j < 4)
+//     	{
+// 			if ((*tetri).shape[i][j] == '.')
+// 				j++;
+// 			else
+// 				break;
+// 			if ((*tetri).shape[i][j] == '.' && ((*tetri).shape[i + 1][j] == '.'))
+// 				q++;
+// 		}
+// 		if (j == 4)
+// 		{
+// 			k = 0;
+// 			while (k < 4)
+// 			{
+// 				l = 0;
+// 				while (l < 4)
+// 				{
+// 					(*temp).shape[k][l] = (*tetri).shape[i][j];
+// 					(*tetri).shape[i][j] = (*tetri).shape[i+1][j];
+// 					(*tetri).shape[i+1][j] = (*temp).shape[k][l];
+// 					l++;
+// 				}
+// 				k++;
+// 			}
+// 		}
+// 		if (q == 4)
+// 		{
+// 			k = 0;
+// 			while (k < 4)
+// 			{
+// 				l = 0;
+// 				while (l < 4)
+// 				{
+// 					(*temp).shape[k][l] = (*tetri).shape[i][j];
+// 					(*tetri).shape[i][j] = (*tetri).shape[i][j+1];
+// 					(*tetri).shape[i][j+1] = (*temp).shape[k][l];
+// 					l++;
+// 				}
+// 				k++;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// }
 
-	i = 0;
-	while (i < 3)
-    {
+void cut_emplty_lines(t_tetr *tetri)
+{
+	int str_counter = 0;
+	int i = 0;
+	int j = 0;
+	int new_i;
+	int empty_string;
+	// while (i < 4)
+	// {
 		j = 0;
+		str_counter = 0;
 		while (j < 4)
-    	{
+		{
 			if ((*tetri).shape[i][j] == '.')
-				j++;
-			else
-				break;
-			if ((*tetri).shape[i][j] == '.' && ((*tetri).shape[i + 1][j] == '.'))
-				q++;
+				str_counter++;
+			j++;
 		}
-		if (j == 4)
-		{
-			k = 0;
-			while (k < 4)
+		if (str_counter == 4)
 			{
-				l = 0;
-				while (l < 4)
-				{
-					(*temp).shape[k][l] = (*tetri).shape[i][j];
-					(*tetri).shape[i][j] = (*tetri).shape[i+1][j];
-					(*tetri).shape[i+1][j] = (*temp).shape[k][l];
-					l++;
-				}
-				k++;
+				empty_string++;
 			}
-		}
-		if (q == 4)
+				new_i = 0;
+				while (new_i < 3)
+				{
+					ft_strncpy((*tetri).shape[new_i], (*tetri).shape[new_i + 1], 5);
+					new_i++;
+				}
+				ft_strncpy((*tetri).shape[3], "....", 5);
+			}
+		// i++;
+}
+
+oid cut_emplty_column(t_tetr *tetri)
+{
+	int col_counter = 0;
+	int i = 0;
+	int j = 0;
+	int new_i;
+	// while (i < 4)
+	// {
+		i = 0;
+		col_counter = 0;
+		while (i < 4)
 		{
-			k = 0;
-			while (k < 4)
-			{
-				l = 0;
-				while (l < 4)
-				{
-					(*temp).shape[k][l] = (*tetri).shape[i][j];
-					(*tetri).shape[i][j] = (*tetri).shape[i][j+1];
-					(*tetri).shape[i][j+1] = (*temp).shape[k][l];
-					l++;
-				}
-				k++;
-			}
+			if ((*tetri).shape[i][j] == '.')
+				str_counter++;
+			j++;
 		}
-		i++;
-	}
+		if (str_counter == 4)
+			{
+				new_j = 0;
+				while (new_j < 3)
+				{
+					ft_strncpy((*tetri).shape[new_j], (*tetri).shape[new_j + 1], 5);
+					new_j++;
+				}
+				ft_strncpy((*tetri).shape[3], "....", 5);
+			}
+		// i++;
 }
 
 int tetri_placing(t_tetr *tetri,  int x, int y,char **map, int map_size)
 {
 	int i;
 	int j;
+	int k;
 	// printf("%d - это x_shift\n", x_shift);
 	// printf("%d - это y_shift\n", y_shift);
 	// printf("%d - это tetri_height\n", (*tetri).height);
 	// printf("%d - это tetri_width\n", (*tetri).width);
 	//move_tetri(tetri);
+	cut_emplty_lines(tetri);
+	printf("ниже обрезанная тетри\n");
+	for (int n = 0; n < 4; n++)
+		printf("%s\n", (*tetri).shape[n]);
+	printf("выше обрезанная тетри\n");
+
 	printf("I m here x %5d, y %5d, mapsize %5d\n", x, y, map_size);
 	if (map[y][x] != '.')
 		return (0);
 	// j = y_shift;
 	i = -1;
+	k = 0;
 	while (++i < 4)
 	{
 		j = -1;
 		while (++j < 4)
 		{
+			if ((tetri->shape)[0][0] == '.' && k == 0)
+			{
+				k++;
+			}
 			printf("tetri i %4d, j %4d, value %c, letter %c \n", i,j,tetri->shape[i][j], tetri->letter);
 			if ((tetri->shape)[i][j] == tetri->letter)
 			{
 				printf("args: x %4d, y %4d, i %4d, j %4d\n", x,y,i,j);
-				if (!((y + i >= 0) && (y + i < map_size) && (x + j >= 0) && (x + j < map_size)))
+				if (!((y + i >= 0) && (y + i < map_size) && (x + j - k >= 0) && (x + j - k < map_size)))
 					return (0);
-				if (map[y + i][x + j] != '.')
+				if (map[y + i][x + j - k] != '.')
 					return(0);
 			}
 		}
@@ -297,15 +370,20 @@ int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size)
     //find_first_point(tetri, coord);
     y_shift = coord[0];
     x_shift = coord[1];
+	int k = 0;
 	while (j < (*tetri).height && (y + j + y_shift) < map_size)
 	{
 		//y += j;
 		i = 0;
+		if ((tetri->shape)[0][0] == '.' && k == 0)
+		{
+			k++;
+		}
 		while (i < (*tetri).width && (x + i + x_shift) <= map_size)
 		{
 		//	x += i;
-			if (((*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter) && map[y + j][x + i] == '.')//!= '.' && ((*tetri).shape[j][i] != '\n')) // and  != '\n'
-				map[y + j][x + i] = (*tetri).shape[j + y_shift][i + x_shift];
+			if (((*tetri).shape[j + y_shift][i + x_shift] == (*tetri).letter) && map[y + j][x + i - k] == '.')//!= '.' && ((*tetri).shape[j][i] != '\n')) // and  != '\n'
+				map[y + j][x + i - k] = (*tetri).shape[j + y_shift][i + x_shift];
 			i++;
 		}
 		j++;
