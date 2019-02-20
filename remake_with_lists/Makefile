@@ -11,21 +11,24 @@
 # **************************************************************************** #
 
 NAME = fillit
-# SRC = *.c
-# OBJ = $(SRC:.c=.o)
-SRC = $(wildcard *.c)
-OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
+SRC = *.c
+OBJ = $(SRC:.c=.o)
+# SRC = $(wildcard *.c)
+# OBJ = $(patsubst %.c,%.o,$(wildcard *.c))
 FLAGS = -Wall -Wextra -Werror
 HEADER = -I fillit.h
-LIBFT = ./libft
-LIBINCLUDES = -I ./libft/includes
+LIBFT = libft/
+LIBINCLUDES = -I /libft/includes
 
 all: $(NAME)
 
 $(NAME):
 	make -C $(LIBFT)
-	#gcc -g main.c solving.c validation.c reading.c lib_functions.c list_functions.c -I fillit.h -I libft/includes -L libft/ -lft
-	gcc -c $(FLAGS) $(HEADER) $(SRC) $(OBJ) $(LIBINCLUDES) -L $(LIBFT) -lft -o $(NAME)
+	gcc -o fillit main.c solving.c validation.c reading.c lib_functions.c list_functions.c -I fillit.h -I libft/includes -L libft/ -lft
+	#gcc -c $(FLAGS) $(HEADER) $(SRC) $(OBJ) $(LIBINCLUDES) -L $(LIBFT) -lft -o $(NAME)
+
+%.o: %.c
+	gcc $(FLAGS) $(HEADER) -c $^ -o $@
 
 clean:
 	make -C libft/ clean
