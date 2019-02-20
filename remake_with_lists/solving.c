@@ -6,7 +6,7 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/20 23:27:08 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/21 01:39:47 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,8 @@ void cut_emplty_lines(t_tetr *tetri)
 	int i = 0;
 	int j = 0;
 	int new_i;
-	int empty_string;
-	// while (i < 4)
-	// {
+	while (i < 4)
+	{
 		j = 0;
 		str_counter = 0;
 		while (j < 4)
@@ -192,47 +191,46 @@ void cut_emplty_lines(t_tetr *tetri)
 		}
 		if (str_counter == 4)
 			{
-				empty_string++;
+        new_i = i;
+        while (new_i < 3 - i)
+       {
+          ft_strncpy((*tetri).shape[new_i], (*tetri).shape[new_i + 1], 5);
+          new_i++;
+       }
+       ft_strncpy((*tetri).shape[new_i], "....", 5); // not sure about this one, to be tested
 			}
-				new_i = 0;
-				while (new_i < 3)
-				{
-					ft_strncpy((*tetri).shape[new_i], (*tetri).shape[new_i + 1], 5);
-					new_i++;
-				}
-				ft_strncpy((*tetri).shape[3], "....", 5);
-			}
-		// i++;
+      i++;
+    }
 }
 
-oid cut_emplty_column(t_tetr *tetri)
-{
-	int col_counter = 0;
-	int i = 0;
-	int j = 0;
-	int new_i;
-	// while (i < 4)
-	// {
-		i = 0;
-		col_counter = 0;
-		while (i < 4)
-		{
-			if ((*tetri).shape[i][j] == '.')
-				str_counter++;
-			j++;
-		}
-		if (str_counter == 4)
-			{
-				new_j = 0;
-				while (new_j < 3)
-				{
-					ft_strncpy((*tetri).shape[new_j], (*tetri).shape[new_j + 1], 5);
-					new_j++;
-				}
-				ft_strncpy((*tetri).shape[3], "....", 5);
-			}
-		// i++;
-}
+// oid cut_emplty_column(t_tetr *tetri)
+// {
+// 	int col_counter = 0;
+// 	int i = 0;
+// 	int j = 0;
+// 	int new_i;
+// 	// while (i < 4)
+// 	// {
+// 		i = 0;
+// 		col_counter = 0;
+// 		while (i < 4)
+// 		{
+// 			if ((*tetri).shape[i][j] == '.')
+// 				str_counter++;
+// 			j++;
+// 		}
+// 		if (str_counter == 4)
+// 			{
+// 				new_j = 0;
+// 				while (new_j < 3)
+// 				{
+// 					ft_strncpy((*tetri).shape[new_j], (*tetri).shape[new_j + 1], 5);
+// 					new_j++;
+// 				}
+// 				ft_strncpy((*tetri).shape[3], "....", 5);
+// 			}
+// 		// i++;
+// }
 
 int tetri_placing(t_tetr *tetri,  int x, int y,char **map, int map_size)
 {
@@ -375,7 +373,7 @@ int tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size)
 	{
 		//y += j;
 		i = 0;
-		if ((tetri->shape)[0][0] == '.' && k == 0)
+		if ((tetri->shape)[0][0] == '.' && k == 0) // !! ensure this works with the utmost left position
 		{
 			k++;
 		}
