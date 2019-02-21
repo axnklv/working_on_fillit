@@ -6,32 +6,16 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 19:35:08 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/17 17:41:06 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/21 16:29:50 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-/*
-void	*ft_memset(void *b, int c, size_t len)
-{
-	size_t			i;
-	unsigned char	*s;
 
-	i = 0;
-	s = (unsigned char *)b;
-	while (len > 0)
-	{
-		s[i] = c;
-		i++;
-		len--;
-	}
-	return (s);
-}*/
-
-void	*ft_memset(void *b, int c, size_t len)
+void				*ft_memset(void *b, int c, size_t len)
 {
-	unsigned char *d;
-	unsigned char p;
+	unsigned char	*d;
+	unsigned char	p;
 
 	d = b;
 	p = c;
@@ -44,9 +28,9 @@ void	*ft_memset(void *b, int c, size_t len)
 	return (b);
 }
 
-void		*ft_memalloc(size_t size)
+void				*ft_memalloc(size_t size)
 {
-	void	*mem;
+	void			*mem;
 
 	mem = malloc(size);
 	if (mem == NULL)
@@ -55,7 +39,7 @@ void		*ft_memalloc(size_t size)
 		return (ft_memset(mem, 0, size));
 }
 
-void	ft_memdel(void **ap)
+void				ft_memdel(void **ap)
 {
 	if (ap)
 	{
@@ -64,7 +48,7 @@ void	ft_memdel(void **ap)
 	}
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void				*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t			i;
 	unsigned char	*a;

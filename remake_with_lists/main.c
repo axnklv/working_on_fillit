@@ -6,25 +6,34 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 21:45:07 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/20 22:07:49 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/21 16:26:43 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "solving.h"
 
-void it_is_error(void)
+void		usage(void)
 {
-    write(1, "error\n", 6);
-    exit(1);
+	write(1, "usage: ./fillit <FILE>\n", 23);
+	exit(0);
+}
+
+void		it_is_error(void)
+{
+	write(1, "error\n", 6);
+	exit(1);
 }
 
 int			main(int argc, char **argv)
 {
-	int quantity;
+	int		quantity;
 	t_list	*tetris;
 	int		fd;
-	char **map;
+	char	**map;
+
+	if (argc != 2)
+		usage();
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -35,15 +44,14 @@ int			main(int argc, char **argv)
 		map = fillit(quantity, tetris);
 		//printing_fin_map(map);
 		//free_list(tetris);
-
 	}
 	return (0);
 }
 
-void printing_fin_map(char **map)
+void		printing_fin_map(char **map)
 {
-	int i, j;
-	i = 0;
+	int		j;
+
 	j = 0;
 	while (map[j])
 	{

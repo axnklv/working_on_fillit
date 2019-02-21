@@ -6,16 +6,16 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 20:56:24 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/18 21:35:25 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/21 16:21:19 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-# include "libft/includes/libft.h"
-void	to_letters(char **tetr, char letter)
+
+void		to_letters(char **tetr, char letter)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (tetr[i] != NULL)
@@ -67,23 +67,22 @@ t_list		*create_tetr(char *buff, char letter)
 
 	height = 1;
 	width = 1;
-	i = 0;
-	while (buff[i] != '\0')
+	i = -1;
+	while (buff[++i] != '\0')
 	{
 		if (buff[i] == '#')
 		{
 			if (buff[i + 1] == '#' && buff[i + 5] == '#' && buff[i + 6] == '#')
-            {
-                width = 2;
-                height = 2;
-                break;
-            } 
+			{
+				width = 2;
+				height = 2;
+				break ;
+			}
 			if ((i < 19) && (buff[i + 1] == '#'))
 				width++;
 			if ((i < 14) && (buff[i + 5] == '#'))
 				height++;
 		}
-		i++;
 	}
 	tetr.height = height;
 	tetr.width = width;
@@ -107,8 +106,8 @@ t_list		*read_tetris(int fd)
 	while ((ret = read(fd, buff, 21)) && (ret != -1))
 	{
 		buff[ret] = '\0';
-        if ((ret != 21) && (buff[ret - 2] == '\n')) //или не ret-2, а 20 просто?
-    		it_is_error();
+		if ((ret != 21) && (buff[ret - 2] == '\n'))
+			it_is_error();
 		tetr = create_tetr(buff, letter++);
 		if (tetr == NULL)
 			free_list(tetris);

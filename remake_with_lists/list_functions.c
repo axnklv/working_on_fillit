@@ -6,13 +6,13 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 19:08:58 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/14 20:59:55 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/21 16:28:42 by elchrist         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-t_list	*ft_lstnew(void const *content, size_t content_size)
+t_list		*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list	*elem;
 
@@ -66,7 +66,7 @@ void		ft_listadd_to_end(t_list **begin_list, t_list *new)
 	}
 }
 
-int		ft_listlen(t_list *content)
+int			ft_listlen(t_list *content)
 {
 	int		len;
 
@@ -81,14 +81,14 @@ int		ft_listlen(t_list *content)
 	return (len);
 }
 
-void print_list(t_list *head)
+void		print_list(t_list *head)
 {
-    t_list *current;
+	t_list	*current;
 
 	current = head;
-    while (current != NULL)
+	while (current != NULL)
 	{
-        printf("%p\n", &current->next);
-        current = current->next;
-    }
+		printf("%p\n", &current->next);
+		current = current->next;
+	}
 }
