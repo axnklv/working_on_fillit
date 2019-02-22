@@ -6,7 +6,7 @@
 /*   By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 20:56:24 by elchrist          #+#    #+#             */
-/*   Updated: 2019/02/21 16:21:19 by elchrist         ###   ########.fr       */
+/*   Updated: 2019/02/22 20:44:40 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,7 @@ t_list		*read_tetris(int fd)
 			free_list(tetris);
 		ft_listadd_to_end(&tetris, tetr);
 	}
+	if (ret == -1 || tetris == NULL || buff[20] == '\n')
+		it_is_error();
 	return (tetris);
 }

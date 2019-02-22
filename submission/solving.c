@@ -6,11 +6,11 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 00:41:43 by creek             #+#    #+#             */
-/*   Updated: 2019/02/22 19:38:10 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/22 22:08:17 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solving.h"
+#include "fillit.h"
 
 int		ft_sqrt_round_up(int nb)
 {
@@ -43,27 +43,27 @@ int		solving(int quantity, t_list *tetris, char **map, int map_size)
 {
 	int i;
 	int j;
+	int yx[2] = {0, 0};
 
-	i = 0;
 	if (quantity == 0)
 		return (1);
-	while (i < map_size)
+	while (yx[0] < map_size)
 	{
-		j = 0;
-		while (j < map_size)
+		yx[1] = 0;
+		while (yx[1] < map_size)
 		{
-			if (tetri_placing((t_tetr *)tetris->content, j, i, map, map_size))
+			if (tetri_placing((t_tetr *)tetris->content, yx, map, map_size))
 			{
-				tetri_drawing(i, j, map, (t_tetr *)tetris->content, map_size);
+				tetri_drawing(yx, map, (t_tetr *)tetris->content, map_size);
 				quantity--;
 				if (solving(quantity, tetris->next, map, map_size))
 					return (1);
-				remove_tetri((t_tetr *)tetris->content, map, j, i, map_size);
+				remove_tetri((t_tetr *)tetris->content, map, map_size);
 				quantity++;
 			}
-			j++;
+			yx[1]++;
 		}
-		i++;
+		yx[0]++;
 	}
 	return (0);
 }
@@ -88,11 +88,18 @@ char	**fillit(int quantity, t_list *tetris)
 	return (map);
 }
 
-int		stupid_func(t_tetr *tetri)
+int		left_corner_check(t_tetr *tetri, int *yx)
 {
-	if ((tetri->shape)[0][2] == tetri->letter && (tetri->shape[1][0] == tetri->\
-		letter) && (tetri->shape[1][1] == tetri->letter) && (tetri->shape[1][2]\
-			== tetri->letter))
-		return (1);
-	return (0);
+	int k;
+
+	k = 0;
+	if ((tetri->shape)[0][0] == '.' && k == 0 && yx[1] != 0)
+	{
+		k++;
+		if ((tetri->shape)[0][2] == tetri->letter && (tetri->shape[1][0] == tetri->\
+			letter) && (tetri->shape[1][1] == tetri->letter) && (tetri->shape[1][2]\
+				== tetri->letter))
+			k++;
+	}
+	return (k);
 }

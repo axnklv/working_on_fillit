@@ -6,11 +6,11 @@
 /*   By: creek <creek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 19:23:39 by creek             #+#    #+#             */
-/*   Updated: 2019/02/22 20:21:35 by creek            ###   ########.fr       */
+/*   Updated: 2019/02/22 22:08:08 by creek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solving.h"
+#include "fillit.h"
 
 void	cut_empty_lines(t_tetr *tetri)
 {
@@ -83,7 +83,7 @@ void	cut_empty_column(t_tetr *tetri)
 	}
 }
 
-int		tetri_placing(t_tetr *tetri, int x, int y, char **map, int map_size)
+int		tetri_placing(t_tetr *tetri, int *yx, char **map, int map_size)
 {
 	int i;
 	int j;
@@ -91,8 +91,6 @@ int		tetri_placing(t_tetr *tetri, int x, int y, char **map, int map_size)
 
 	cut_empty_lines(tetri);
 	cut_empty_column(tetri);
-	if (map[y][x] != '.')
-		return (0);
 	i = -1;
 	k = 0;
 	while (++i < 4)
@@ -100,18 +98,13 @@ int		tetri_placing(t_tetr *tetri, int x, int y, char **map, int map_size)
 		j = -1;
 		while (++j < 4)
 		{
-			if ((tetri->shape)[0][0] == '.' && k == 0 && x != 0)
-			{
-				k++;
-				if (stupid_func(tetri))
-					k++;
-			}
+			k = left_corner_check(tetri, yx);
 			if ((tetri->shape)[i][j] == tetri->letter)
 			{
-				if (!((y + i >= 0) && (y + i < map_size) && (x + j - k >= 0)\
-				&& (x + j - k < map_size)))
+				if (!((yx[0] + i >= 0) && (yx[0] + i < map_size) && \
+				(yx[1] + j - k >= 0) && (yx[1] + j - k < map_size)))
 					return (0);
-				if (map[y + i][x + j - k] != '.')
+				if (map[yx[0] + i][yx[1] + j - k] != '.')
 					return (0);
 			}
 		}
@@ -119,7 +112,7 @@ int		tetri_placing(t_tetr *tetri, int x, int y, char **map, int map_size)
 	return (1);
 }
 
-int		remove_tetri(t_tetr *tetri, char **map, int y, int x, int map_size)
+int		remove_tetri(t_tetr *tetri, char **map, int map_size)
 {
 	int i;
 	int j;
@@ -137,33 +130,4 @@ int		remove_tetri(t_tetr *tetri, char **map, int y, int x, int map_size)
 		j++;
 	}
 	return (0);
-}
-
-int		tetri_drawing(size_t y, size_t x, char **map, t_tetr *tetri, int map_size)
-{
-	size_t		i;
-	size_t		j;
-	int			k;
-
-	j = 0;
-	k = 0;
-	while (j < (*tetri).height && (y + j) < map_size)
-	{
-		i = 0;
-		if ((tetri->shape)[0][0] == '.' && k == 0 && x != 0)
-		{
-			k++;
-			if (stupid_func(tetri))
-				k++;
-		}
-		while (i < (*tetri).width && (x + i - k) <= map_size)
-		{
-			if (((*tetri).shape[j][i] == (*tetri).letter) && map[y + j]\
-			[x + i - k] == '.')
-				map[y + j][x + i - k] = (*tetri).shape[j][i];
-			i++;
-		}
-		j++;
-	}
-	return (1);
 }

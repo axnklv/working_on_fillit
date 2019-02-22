@@ -6,7 +6,7 @@
 #    By: elchrist <elchrist@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/21 22:00:14 by elchrist          #+#    #+#              #
-#    Updated: 2019/02/20 22:12:22 by creek            ###   ########.fr        #
+#    Updated: 2019/02/22 19:28:05 by creek            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ all: $(NAME)
 
 $(NAME):
 	make -C $(LIBFT)
-	gcc -o fillit main.c solving.c validation.c reading.c lib_functions.c list_functions.c -I fillit.h -I libft/includes -L libft/ -lft
+	gcc -o fillit main.c solving.c placing.c validation.c reading.c lib_functions.c list_functions.c -I fillit.h -I libft/includes -L libft/ -lft
 	#gcc -c $(FLAGS) $(HEADER) $(SRC) $(OBJ) $(LIBINCLUDES) -L $(LIBFT) -lft -o $(NAME)
 
 %.o: %.c
